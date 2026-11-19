@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "Pastry English Pro",
+  "short_name": "Pastry English",
+  "description": "L'anglais professionnel de la pâtisserie — CAP, MC, BP.",
+  "lang": "fr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#120D18",
+  "theme_color": "#120D18",
+  "categories": ["education"],
+  "icons": [
+    { "src": "icons/toque-192.png",          "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/toque-512.png",          "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/toque-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/toque-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

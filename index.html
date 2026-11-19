@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!--
+ ╔══════════════════════════════════════════════════════════════════╗
+ ║          PASTRY ENGLISH PRO — Application éducative             ║
+ ║  © 2025 — Tous droits réservés.                                  ║
+ ║  Cette application, son code source, sa base de données         ║
+ ║  pédagogique, ses mécaniques de jeu, son design graphique       ║
+ ║  et son contenu sont protégés par le droit d'auteur             ║
+ ║  (Code de la Propriété Intellectuelle, art. L.111-1 et s.).     ║
+ ║  Toute reproduction, distribution, modification ou              ║
+ ║  exploitation commerciale sans autorisation écrite              ║
+ ║  préalable est strictement interdite.                           ║
+ ║  Version : 5.0.0                                                 ║
+ ╚══════════════════════════════════════════════════════════════════╝
+-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pastry English">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#120D18">
+    <meta name="format-detection" content="telephone=no">
+    <title>Pastry English Pro</title>
+
+    <!-- Icônes d'installation : cupcake (iPhone / iPad / autres), toque (Android). -->
+    <link rel="manifest" id="lnk-manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" id="lnk-a180" href="icons/cupcake-apple-180.png">
+    <link rel="apple-touch-icon" id="lnk-a167" sizes="167x167" href="icons/cupcake-apple-167.png">
+    <link rel="apple-touch-icon" id="lnk-a152" sizes="152x152" href="icons/cupcake-apple-152.png">
+    <link rel="apple-touch-icon" id="lnk-a120" sizes="120x120" href="icons/cupcake-apple-120.png">
+    <link rel="icon" id="lnk-f32" type="image/png" sizes="32x32" href="icons/cupcake-favicon-32.png">
+    <link rel="icon" id="lnk-f16" type="image/png" sizes="16x16" href="icons/cupcake-favicon-16.png">
+    <script>
+    /* Android → icône toque ; iPhone/iPad et le reste → cupcake.
+       Pour forcer un modèle (test) : ouvrir index.html?icon=toque ou ?icon=cupcake */
+    (function(){
+        var p = new URLSearchParams(location.search).get('icon');
+        var toque = p ? p === 'toque' : /Android/i.test(navigator.userAgent);
+        if (!toque) return;
+        var set = function(id, href){ var e = document.getElementById(id); if (e) e.href = href; };
+        set('lnk-manifest', 'manifest-toque.webmanifest');
+        set('lnk-a180', 'icons/toque-apple-180.png');
+        set('lnk-a167', 'icons/toque-apple-167.png');
+        set('lnk-a152', 'icons/toque-apple-152.png');
+        set('lnk-a120', 'icons/toque-apple-120.png');
+        set('lnk-f32',  'icons/toque-favicon-32.png');
+        set('lnk-f16',  'icons/toque-favicon-16.png');
+    })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══ HOME ═══════════════════════════════════════════════════════ -->
+<div id="home-screen" class="screen">
+    <img class="home-logo" src="icons/cupcake-192.png" width="88" height="88" alt="Pastry English Pro">
+
+    <h1 class="home-title">Pastry<br><span>English Pro</span></h1>
+    <p class="home-sub">CAP · MC · BP Pâtisserie</p>
+
+    <div class="img-grid" aria-hidden="true">
+        <div class="tile">🥐</div>
+        <div class="tile">🍫</div>
+        <div class="tile">🧁</div>
+        <div class="tile">🍓</div>
+    </div>
+
+    <div class="home-stats" id="home-stats">
+        <div class="home-stats-row">
+            <div class="stat-icon" id="h-icon">👨‍🍳</div>
+            <div>
+                <div class="stat-name" id="h-name">Niveau 1 · Apprentice</div>
+                <div class="stat-xp"   id="h-xp">0 XP</div>
+                <div class="stat-xp"   id="h-extra"></div>
+            </div>
+        </div>
+        <div class="badges" id="h-badges"></div>
+    </div>
+
+    <div class="pro-badge">✦ Formation professionnelle</div>
+    <div class="home-count" id="home-count"></div>
+    <button class="btn-primary" id="btn-start">Commencer la formation</button>
+    <button class="btn-ghost" id="btn-install" style="display:none">📲 Installer l'application</button>
+    <p class="install-hint" id="install-hint" style="display:none"></p>
+
+    <div class="home-tools">
+        <button class="link-btn" id="btn-export">💾 Sauvegarder ma progression</button>
+        <button class="link-btn" id="btn-import">📂 Restaurer</button>
+        <input type="file" id="file-import" accept="application/json,.json" hidden>
+    </div>
+
+    <p class="home-legal">
+        © 2025 Pastry English Pro. Tous droits réservés.<br>
+        Contenu protégé — Code de la Propriété Intellectuelle, art. L.111-1.
+    </p>
+</div>
+
+<!-- ═══ GAME SCREEN ════════════════════════════════════════════════ -->
+<div id="game-screen" class="screen">
+    <header>
+        <div class="hdr-row">
+            <button class="btn-back" id="btn-back" aria-label="Retour">←</button>
+            <span class="hdr-title">Pastry English Pro</span>
+            <div class="streak-bar" id="streak-bar">🔥 0 j · ⚡ 0</div>
+        </div>
+        <div class="lvl-row">
+            <div class="lvl-left">
+                <span class="lvl-icon" id="lvl-icon">👨‍🍳</span>
+                <div>
+                    <div class="lvl-name" id="lvl-name">Niveau 1 · Apprentice</div>
+                    <div class="lvl-sub"  id="lvl-sub">Débutant en pâtisserie</div>
+                </div>
+            </div>
+            <div class="xp-pill" id="xp-pill">0 XP</div>
+        </div>
+        <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+        <div class="lvl-dots" id="lvl-dots"></div>
+        <div class="goal-row">
+            <span id="goal-txt">Objectif du jour</span>
+            <div class="goal-bar"><div id="goal-fill" style="width:0%"></div></div>
+        </div>
+    </header>
+
+    <nav class="menu-scroll" id="mode-menu" aria-label="Exercices"></nav>
+    <nav class="menu-scroll" id="theme-menu" aria-label="Thèmes"></nav>
+    <nav class="menu-scroll" id="type-menu" aria-label="Type de question" style="display:none"></nav>
+
+    <main>
+        <div class="game-card" id="game-card"></div>
+        <div class="ctrl-area"  id="ctrl-area"></div>
+    </main>
+</div>
+
+<script src="data.js"></script>
+<script src="data-extra.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
